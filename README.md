@@ -12,8 +12,8 @@ Create and activate a virtual environment for all things qiskit:
 ```
 # Do this outside the repository
 # or add the venv to the .gitignore
-python3 -m venv qiskit
-. qiskit/bin/activate
+$ python3 -m venv qiskit
+$ . qiskit/bin/activate
 # and activate the environment in new terminals
 ```
 
@@ -23,9 +23,9 @@ Download qiskit packages:
 
 ```
 # core library
-python3 -m pip install qiskit 
+$ python3 -m pip install qiskit 
 # for using jupyter and visualizations
-python3 -m pip install "qiskit[visualization]" jupyterlab
+$ python3 -m pip install "qiskit[visualization]" jupyterlab
 ```
 
 ### Cloud setup (with IBM)
