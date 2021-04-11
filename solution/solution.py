@@ -2,6 +2,7 @@ from typing import List, Tuple
 
 import numpy as np
 import cirq
+from solution.SingleQubit import single_qubit
 
 
 def matrix_to_sycamore_operations(
@@ -27,4 +28,7 @@ def matrix_to_sycamore_operations(
                 an empty list.
         .
     """
+    if (len(target_qubits) == 1):
+        return single_qubit(target_qubits, matrix)
+
     return NotImplemented, []
