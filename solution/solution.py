@@ -36,7 +36,15 @@ def matrix_to_sycamore_operations(
         return single_qubit(target_qubits, matrix)
     if (len(target_qubits) == 2):
         return two_qubit(target_qubits, matrix)
-
-    return random_matrix(target_qubits, matrix)
+    if np.count_nonzero(matrix) == len(target_qubits):
+        # Either diagonal or increment
+        if len(target_qubits) < 5:
+            return random_matrix(target_qubits, matrix)
+        elif len(target_qubits) < 6:
+            return random_matrix(target_qubits, matrix, swap=False)
+    if len(target_qubits) < 5:
+        return random_matrix(target_qubits, matrix)
+    elif len(target_qubits) < 5:
+        return random_matrix(target_qubits, matrix, swap=False)
 
     return NotImplemented, []

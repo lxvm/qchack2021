@@ -51,7 +51,7 @@ def do_swap(
 
 
 def random_matrix(
-    target_qubits: List[cirq.GridQubit], matrix: np.ndarray
+    target_qubits: List[cirq.GridQubit], matrix: np.ndarray, swap=True,
 ) -> Tuple[cirq.OP_TREE, List[cirq.GridQubit]]:
 
     circuit = quantum_decomp.matrix_to_cirq_circuit(matrix)
@@ -83,25 +83,28 @@ def random_matrix(
         else:
             decomp_ops.append(op.transform_qubits(mapping))
 
-    swapped_ops = []
+    swapped_ops = cirq.Circuit()
     for op in decomp_ops:
         if len(op.qubits) == 2:
             q0 = op.qubits[0]
             q1 = op.qubits[1]
 
-            oplist, target = do_swap(q0, q1)
-            adjacentop = op.transform_qubits({q0: target, q1: q1})
-            revlist = swap_to(target, q0)
+            if swap:
+                oplist, target = do_swap(q0, q1)
+                adjacentop = op.transform_qubits({q0: target, q1: q1})
+                revlist = swap_to(target, q0)
 
-            swapped_ops.extend(oplist)
-            swapped_ops.append(adjacentop)
-            swapped_ops.extend(revlist)
+                swapped_ops.extend(oplist)
+                swapped_ops.append(adjacentop)
+                swapped_ops.extend(revlist)
+            else:
+                swapped_ops.append(op)
         else:
             swapped_ops.append(op)
 
 
     SycamoreGates = cirq.google.optimized_for_sycamore(
-        cirq.Circuit(swapped_ops),
+        swapped_ops,
         optimizer_type='sycamore',
     )
 
