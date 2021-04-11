@@ -98,9 +98,6 @@ def random_matrix(
 
 
     converter = cirq.google.optimizers.ConvertToSycamoreGates()
-    #SycamoreGates = converter.convert(decomp_ops)
     SycamoreGates = converter.convert(swapped_ops)
-    SycamoreGates = cirq.google.optimized_for_sycamore(cirq.Circuit(SycamoreGates))
-    #SycamoreGates = cirq.google.optimized_for_sycamore(cirq.Circuit(decomp_ops), optimizer_type='sycamore')
     
     return SycamoreGates, []
