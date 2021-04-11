@@ -30,17 +30,17 @@ def matrix_to_sycamore_operations(
                 an empty list.
         .
     """
-    if np.all(matrix == np.eye(len(target_qubits))):
-        return [], _
+    if np.all(matrix == np.eye(2**len(target_qubits))):
+        return [], []
     if (len(target_qubits) == 1):
         return single_qubit(target_qubits, matrix)
     if (len(target_qubits) == 2):
         return two_qubit(target_qubits, matrix)
-    if np.count_nonzero(matrix) == len(target_qubits):
+    if np.count_nonzero(matrix) == 2**len(target_qubits):
         # Either diagonal or increment
         if len(target_qubits) < 5:
             return random_matrix(target_qubits, matrix)
-        elif len(target_qubits) < 6:
+        elif len(target_qubits) < 7:
             return random_matrix(target_qubits, matrix, swap=False)
     if len(target_qubits) < 5:
         return random_matrix(target_qubits, matrix)
