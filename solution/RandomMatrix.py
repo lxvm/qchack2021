@@ -54,9 +54,6 @@ def random_matrix(
     target_qubits: List[cirq.GridQubit], matrix: np.ndarray
 ) -> Tuple[cirq.OP_TREE, List[cirq.GridQubit]]:
 
-    if len(target_qubits) > 3:
-        return NotImplemented, []
-
     circuit = quantum_decomp.matrix_to_cirq_circuit(matrix)
     old_qubits = [(str(x), x) for x in circuit.all_qubits()]
     old_qubits = sorted(old_qubits)
