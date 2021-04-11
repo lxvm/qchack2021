@@ -83,7 +83,7 @@ def random_matrix(
         else:
             decomp_ops.append(op.transform_qubits(mapping))
 
-    swapped_ops = cirq.Circuit()
+    swapped_ops = []
     for op in decomp_ops:
         if len(op.qubits) == 2:
             q0 = op.qubits[0]
@@ -104,7 +104,7 @@ def random_matrix(
 
 
     SycamoreGates = cirq.google.optimized_for_sycamore(
-        swapped_ops,
+        cirq.Circuit(swapped_ops),
         optimizer_type='sycamore',
     )
 
