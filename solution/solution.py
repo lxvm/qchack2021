@@ -3,6 +3,7 @@ from typing import List, Tuple
 import numpy as np
 import cirq
 from solution.SingleQubit import single_qubit
+from solution.TwoQubit import two_qubit
 
 
 def matrix_to_sycamore_operations(
@@ -30,5 +31,7 @@ def matrix_to_sycamore_operations(
     """
     if (len(target_qubits) == 1):
         return single_qubit(target_qubits, matrix)
+    if (len(target_qubits) == 2):
+        return two_qubit(target_qubits, matrix)
 
     return NotImplemented, []
