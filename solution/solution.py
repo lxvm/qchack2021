@@ -30,6 +30,8 @@ def matrix_to_sycamore_operations(
                 an empty list.
         .
     """
+    if np.all(matrix == np.eye(len(target_qubits))):
+        return [], _
     if (len(target_qubits) == 1):
         return single_qubit(target_qubits, matrix)
     if (len(target_qubits) == 2):
