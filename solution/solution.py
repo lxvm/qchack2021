@@ -4,6 +4,7 @@ import numpy as np
 import cirq
 from solution.SingleQubit import single_qubit
 from solution.TwoQubit import two_qubit
+from solution.RandomMatrix import random_matrix
 
 
 def matrix_to_sycamore_operations(
@@ -33,5 +34,7 @@ def matrix_to_sycamore_operations(
         return single_qubit(target_qubits, matrix)
     if (len(target_qubits) == 2):
         return two_qubit(target_qubits, matrix)
+
+    return random_matrix(target_qubits, matrix)
 
     return NotImplemented, []
