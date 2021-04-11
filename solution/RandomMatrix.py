@@ -63,7 +63,6 @@ def random_matrix(
     print(mapping)
 
     decomp_ops = []
-    #circuit = circuit
     ops = circuit.all_operations()
 
     for op in ops:
@@ -71,12 +70,16 @@ def random_matrix(
             gate = op
 
             controls = gate.controls
-            target = gate.sub_operation.qubits
+            target = gate.sub_operation.qubits[0]
             matrix = cirq.unitary(gate.sub_operation.gate)
 
-            decomposed_temp = cirq.optimizers.decompose_multi_controlled_rotation(matrix, list(controls), target[0])
-
-            decomp_ops.extend([x.transform_qubits(mapping) for x in decomposed_temp])
+            decomp_ops.extend([x.transform_qubits(mapping) for x in 
+                cirq.optimizers.decompose_multi_controlled_rotation(
+                    matrix,
+                    list(controls),
+                    target
+                )
+            ])
         else:
             decomp_ops.append(op.transform_qubits(mapping))
 
@@ -97,7 +100,9 @@ def random_matrix(
             swapped_ops.append(op)
 
 
-    converter = cirq.google.optimizers.ConvertToSycamoreGates()
-    SycamoreGates = converter.convert(swapped_ops)
-    
+    SycamoreGates = cirq.google.optimized_for_sycamore(
+        cirq.Circuit(swapped_ops),
+        optimizer_type='sycamore',
+    )
+
     return SycamoreGates, []
