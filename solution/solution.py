@@ -40,7 +40,7 @@ def matrix_to_sycamore_operations(
         # Either diagonal or increment
         if len(target_qubits) < 5:
             return random_matrix(target_qubits, matrix)
-        elif len(target_qubits) < 6:
+        elif len(target_qubits) < 7:
             return random_matrix(target_qubits, matrix, swap=False)
     if len(target_qubits) < 5:
         return random_matrix(target_qubits, matrix)
